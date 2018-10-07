@@ -250,4 +250,65 @@ class HandsTest < Test::Unit::TestCase
 
     assert_raises(OverFiveCardError) { pair_with_hands?(six_cards, hands) }
   end
+
+  def test_set_with_hands?
+    cards = [
+      Card.new(1,  's'),
+      Card.new(5,  'h'),
+      Card.new(12, 's'),
+      Card.new(13, 'c'),
+      Card.new(8,  'd')
+    ]
+    hands = [
+      Card.new(5,  's'),
+      Card.new(5,  'd')
+    ]
+    assert_equal(set_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(5,  's'),
+      Card.new(2,  'h')
+    ]
+    assert_equal(set_with_hands?(cards, hands), false)
+
+    hands = [
+      Card.new(11, 's'),
+      Card.new(2,  'h')
+    ]
+    assert_equal(set_with_hands?(cards, hands), false)
+
+    cards = [
+      Card.new(12, 's'),
+      Card.new(13, 'c'),
+      Card.new(5,  's'),
+      Card.new(8,  'd'),
+      Card.new(5,  'h')
+    ]
+    hands = [
+      Card.new(3, 's'),
+      Card.new(5, 'd')
+    ]
+    assert_equal(set_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(3,  's'),
+      Card.new(11, 'd')
+    ]
+    assert_equal(set_with_hands?(cards, hands), false)
+
+    cards = [
+      Card.new(5,  's'),
+      Card.new(13, 'c'),
+      Card.new(5,  'd'),
+      Card.new(8,  'd'),
+      Card.new(5,  'h')
+    ]
+    hands = [
+      Card.new(3,  's'),
+      Card.new(11, 'd')
+    ]
+    assert_equal(set_with_hands?(cards, hands), false)
+
+    assert_raises(OverFiveCardError) { set_with_hands?(six_cards, hands) }
+  end
 end

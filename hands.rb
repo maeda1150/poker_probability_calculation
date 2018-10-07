@@ -78,3 +78,13 @@ def pair_with_hands?(cards, hands)
   end
   false
 end
+
+def set_with_hands?(cards, hands)
+  raise OverFiveCardError if cards.size >= 6
+  cards.combination(3) do |a, b, c|
+    next if a.number == b.number && a.number == c.number
+    comb = [a, b, c, *hands]
+    return true if three_of_a_kind?(comb)
+  end
+  false
+end
