@@ -98,3 +98,37 @@ def three_of_a_kind_with_hands?(cards, hands)
   end
   false
 end
+
+def straight_with_hands?(cards, hands)
+  raise OverFiveCardError if cards.size >= 6
+  cards.combination(3) do |a, b, c|
+    comb = [a, b, c, *hands]
+    return true if straight?(comb)
+  end
+  cards.combination(4) do |a, b, c, d|
+    comb = [a, b, c, d, hands[0]]
+    return true if straight?(comb)
+  end
+  cards.combination(4) do |a, b, c, d|
+    comb = [a, b, c, d, hands[1]]
+    return true if straight?(comb)
+  end
+  false
+end
+
+def flush_with_hands?(cards, hands)
+  raise OverFiveCardError if cards.size >= 6
+  cards.combination(3) do |a, b, c|
+    comb = [a, b, c, *hands]
+    return true if flush?(comb)
+  end
+  cards.combination(4) do |a, b, c, d|
+    comb = [a, b, c, d, hands[0]]
+    return true if flush?(comb)
+  end
+  cards.combination(4) do |a, b, c, d|
+    comb = [a, b, c, d, hands[1]]
+    return true if flush?(comb)
+  end
+  false
+end

@@ -319,7 +319,7 @@ class HandsTest < Test::Unit::TestCase
     ]
     assert_equal(two_pair_with_hands?(cards, hands), true)
 
-    assert_raises(OverFiveCardError) { one_pair_with_hands?(six_cards, hands) }
+    assert_raises(OverFiveCardError) { two_pair_with_hands?(six_cards, hands) }
   end
 
   def test_three_of_a_kind_with_hands?
@@ -381,5 +381,153 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(three_of_a_kind_with_hands?(cards, hands), false)
 
     assert_raises(OverFiveCardError) { three_of_a_kind_with_hands?(six_cards, hands) }
+  end
+
+  def test_straight_with_hands?
+    cards = [
+      Card.new(6,  's'),
+      Card.new(13, 'c'),
+      Card.new(5,  'd'),
+      Card.new(8,  'd'),
+      Card.new(12, 'h')
+    ]
+
+    hands = [
+      Card.new(7,  's'),
+      Card.new(10, 'd')
+    ]
+    assert_equal(straight_with_hands?(cards, hands), false)
+
+    hands = [
+      Card.new(7, 's'),
+      Card.new(9, 'd')
+    ]
+    assert_equal(straight_with_hands?(cards, hands), true)
+
+    cards = [
+      Card.new(6,  's'),
+      Card.new(13, 'c'),
+      Card.new(6,  'd'),
+      Card.new(10, 'd'),
+      Card.new(12, 'h')
+    ]
+
+    hands = [
+      Card.new(11, 's'),
+      Card.new(9,  'd')
+    ]
+    assert_equal(straight_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(11, 's'),
+      Card.new(1,  'd')
+    ]
+    assert_equal(straight_with_hands?(cards, hands), true)
+
+    cards = [
+      Card.new(6, 's'),
+      Card.new(3, 'c'),
+      Card.new(7, 'd'),
+      Card.new(4, 'd'),
+      Card.new(5, 'h')
+    ]
+
+    hands = [
+      Card.new(1, 's'),
+      Card.new(9, 'd')
+    ]
+    assert_equal(straight_with_hands?(cards, hands), false)
+
+    cards = [
+      Card.new(11, 's'),
+      Card.new(3,  'c'),
+      Card.new(7,  'd'),
+      Card.new(4,  'd'),
+      Card.new(5,  'h')
+    ]
+
+    hands = [
+      Card.new(1, 's'),
+      Card.new(6, 'd')
+    ]
+    assert_equal(straight_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(6, 's'),
+      Card.new(1, 'd')
+    ]
+    assert_equal(straight_with_hands?(cards, hands), true)
+
+    assert_raises(OverFiveCardError) { flush_with_hands?(six_cards, hands) }
+  end
+
+  def test_flush_with_hands?
+    cards = [
+      Card.new(6,  's'),
+      Card.new(13, 'd'),
+      Card.new(5,  's'),
+      Card.new(8,  's'),
+      Card.new(12, 'h')
+    ]
+
+    hands = [
+      Card.new(7,  's'),
+      Card.new(10, 's')
+    ]
+    assert_equal(flush_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(7, 's'),
+      Card.new(9, 'd')
+    ]
+    assert_equal(flush_with_hands?(cards, hands), false)
+
+    cards = [
+      Card.new(6,  's'),
+      Card.new(13, 'd'),
+      Card.new(5,  's'),
+      Card.new(8,  's'),
+      Card.new(12, 's')
+    ]
+
+    hands = [
+      Card.new(7, 's'),
+      Card.new(9, 'd')
+    ]
+    assert_equal(flush_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(7, 'c'),
+      Card.new(9, 's')
+    ]
+    assert_equal(flush_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(7, 'c'),
+      Card.new(9, 'd')
+    ]
+    assert_equal(flush_with_hands?(cards, hands), false)
+
+    cards = [
+      Card.new(6,  's'),
+      Card.new(13, 's'),
+      Card.new(5,  's'),
+      Card.new(8,  's'),
+      Card.new(12, 's')
+    ]
+
+    hands = [
+      Card.new(7, 's'),
+      Card.new(9, 'd')
+    ]
+    assert_equal(flush_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(7, 'h'),
+      Card.new(9, 'd')
+    ]
+    assert_equal(flush_with_hands?(cards, hands), false)
+
+    assert_raises(OverFiveCardError) { flush_with_hands?(six_cards, hands) }
   end
 end
