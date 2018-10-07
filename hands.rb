@@ -80,6 +80,15 @@ def one_pair_with_hands?(cards, hands)
   false
 end
 
+def two_pair_with_hands?(cards, hands)
+  raise OverFiveCardError if cards.size >= 6
+  cards.combination(3) do |a, b, c|
+    comb = [a, b, c, *hands]
+    return true if two_pair?(comb)
+  end
+  false
+end
+
 def three_of_a_kind_with_hands?(cards, hands)
   raise OverFiveCardError if cards.size >= 6
   cards.combination(3) do |a, b, c|
