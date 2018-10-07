@@ -19,6 +19,8 @@ results = {
   straight_flush: 0
 }
 
+start_time = Time.now
+
 100_000.times do |t|
   deck = create_deck
   remove_cards_from_deck(deck, hands)
@@ -65,3 +67,6 @@ puts "flush:           #{results[:flush] / 100_000.to_f * 100} %"
 puts "full_house:      #{results[:full_house] / 100_000.to_f * 100} %"
 puts "four_of_a_kind:  #{results[:four_of_a_kind] / 100_000.to_f * 100} %"
 puts "straight_flush:  #{results[:straight_flush] / 100_000.to_f * 100} %"
+
+puts '-' * 20
+puts "time cost : #{Time.now - start_time}s"
