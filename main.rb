@@ -7,6 +7,7 @@ require './remove_cards_from_deck.rb'
 require './utils.rb'
 
 hands = [Card.new(3, 's'), Card.new(5, 'd')]
+try_times = 10_000
 
 results = {
   one_pair: 0,
@@ -21,7 +22,7 @@ results = {
 
 start_time = Time.now
 
-100_000.times do |t|
+try_times.times do |t|
   deck = create_deck
   remove_cards_from_deck(deck, hands)
   shuffle_deck(deck)
@@ -59,14 +60,14 @@ start_time = Time.now
   results[:straight_flush] = results[:straight_flush] + 1 if straight_flush
 end
 
-puts "one_pair:        #{to_percent(results[:one_pair], 100_000)} %"
-puts "two_pair:        #{to_percent(results[:two_pair], 100_000)} %"
-puts "three_of_a_kind: #{to_percent(results[:three_of_a_kind], 100_000)} %"
-puts "straight:        #{to_percent(results[:straight], 100_000)} %"
-puts "flush:           #{to_percent(results[:flush], 100_000)} %"
-puts "full_house:      #{to_percent(results[:full_house], 100_000)} %"
-puts "four_of_a_kind:  #{to_percent(results[:four_of_a_kind], 100_000)} %"
-puts "straight_flush:  #{to_percent(results[:straight_flush], 100_000)} %"
+puts "one_pair:        #{to_percent(results[:one_pair], try_times)} %"
+puts "two_pair:        #{to_percent(results[:two_pair], try_times)} %"
+puts "three_of_a_kind: #{to_percent(results[:three_of_a_kind], try_times)} %"
+puts "straight:        #{to_percent(results[:straight], try_times)} %"
+puts "flush:           #{to_percent(results[:flush], try_times)} %"
+puts "full_house:      #{to_percent(results[:full_house], try_times)} %"
+puts "four_of_a_kind:  #{to_percent(results[:four_of_a_kind], try_times)} %"
+puts "straight_flush:  #{to_percent(results[:straight_flush], try_times)} %"
 
 puts '-' * 20
 puts "time cost : #{cut_below_two_digits(Time.now - start_time)}s"
