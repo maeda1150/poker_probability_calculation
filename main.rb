@@ -6,8 +6,21 @@ require './shuffle_deck.rb'
 require './remove_cards_from_deck.rb'
 require './utils.rb'
 
-hands = [Card.new(3, 's'), Card.new(5, 'd')]
-try_times = 10_000
+input_cards = ARGV[0].split('')
+
+if input_cards.size != 4
+  puts 'Please set collect cards like this. "ruby main.rb 3s5d"'
+  exit 1
+end
+
+hands = [Card.new(input_cards[0], input_cards[1]), Card.new(input_cards[2], input_cards[3])]
+puts "Your hands are #{ARGV[0]}"
+if hands[0].same?(hands[1])
+  puts 'Your hands are same. Please set different cards.'
+  exit 1
+end
+
+try_times = ARGV[1].to_i || 10_000
 
 results = {
   one_pair: 0,
