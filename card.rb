@@ -14,6 +14,10 @@ class Card
     number == card.number && suit == card.suit
   end
 
+  def show
+    puts number.to_s + suit
+  end
+
   private
 
   def check_number
