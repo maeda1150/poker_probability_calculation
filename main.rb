@@ -14,11 +14,11 @@ if input_cards.size != 4
 end
 
 hands = [Card.new(input_cards[0], input_cards[1]), Card.new(input_cards[2], input_cards[3])]
-build_message = ''
+messages = []
 hands.each do |hand|
-  build_message << "'number: #{hand.number}, suit: #{hand.suit}' "
+  messages << "'number: #{hand.number}, suit: #{hand.suit}'"
 end
-puts "Your hands are #{build_message}."
+puts "Your hands are #{messages.join(', ')}."
 if hands[0].same?(hands[1])
   puts 'Your hands are same. Please set different cards.'
   exit 1
