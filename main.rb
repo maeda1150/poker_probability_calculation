@@ -6,7 +6,7 @@ require './shuffle_deck.rb'
 require './remove_cards_from_deck.rb'
 require './utils.rb'
 
-input_cards = ARGV[0].split('')
+input_cards = split_number_and_suit(ARGV[0])
 
 if input_cards.size != 4
   puts 'Please set collect cards like this. "ruby main.rb 3s5d"'
@@ -14,13 +14,18 @@ if input_cards.size != 4
 end
 
 hands = [Card.new(input_cards[0], input_cards[1]), Card.new(input_cards[2], input_cards[3])]
-puts "Your hands are #{ARGV[0]}"
+build_message = ''
+hands.each do |hand|
+  build_message << "'number: #{hand.number}, suit: #{hand.suit}' "
+end
+puts "Your hands are #{build_message}."
 if hands[0].same?(hands[1])
   puts 'Your hands are same. Please set different cards.'
   exit 1
 end
 
 try_times = ARGV[1].to_i || 10_000
+puts "Try times is #{try_times}."
 
 results = {
   one_pair: 0,
@@ -81,6 +86,7 @@ try_times.times do |t|
   results[:set_with_hands] = results[:set_with_hands] + 1 if set_with_hands
 end
 
+puts '-' * 20
 puts "one_pair:         #{to_percent(results[:one_pair], try_times)} %"
 puts "two_pair:         #{to_percent(results[:two_pair], try_times)} %"
 puts "three_of_a_kind:  #{to_percent(results[:three_of_a_kind], try_times)} %"
