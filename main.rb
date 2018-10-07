@@ -28,16 +28,19 @@ try_times = ARGV[1].to_i || 10_000
 puts "Try times is #{try_times}."
 
 results = {
-  one_pair: 0,
-  two_pair: 0,
+  one_pair:        0,
+  two_pair:        0,
   three_of_a_kind: 0,
-  straight: 0,
-  flush: 0,
-  full_house: 0,
-  four_of_a_kind: 0,
-  straight_flush: 0,
-  one_pair_with_hands: 0,
-  three_of_a_kind_with_hands: 0
+  straight:        0,
+  flush:           0,
+  full_house:      0,
+  four_of_a_kind:  0,
+  straight_flush:  0,
+  one_pair_with_hands:        0,
+  two_pair_with_hands:        0,
+  three_of_a_kind_with_hands: 0,
+  straight_with_hands:        0,
+  flush_with_hands:           0
 }
 
 start_time = Time.now
@@ -57,8 +60,6 @@ try_times.times do |t|
   full_house = false
   four_of_a_kind = false
   straight_flush = false
-  one_pair_with_hands = false
-  three_of_a_kind_with_hands = false
 
   all.combination(5) do |a, b, c, d, e|
     temp = [a, b, c, d, e]
@@ -71,8 +72,6 @@ try_times.times do |t|
     four_of_a_kind = true if four_of_a_kind?(temp)
     straight_flush = true if straight_flush?(temp)
   end
-  one_pair_with_hands = true if one_pair_with_hands?(table, hands)
-  three_of_a_kind_with_hands = true if three_of_a_kind_with_hands?(table, hands)
 
   results[:one_pair] = results[:one_pair] + 1 if one_pair
   results[:two_pair] = results[:two_pair] + 1 if two_pair
@@ -82,16 +81,20 @@ try_times.times do |t|
   results[:full_house] = results[:full_house] + 1 if full_house
   results[:four_of_a_kind] = results[:four_of_a_kind] + 1 if four_of_a_kind
   results[:straight_flush] = results[:straight_flush] + 1 if straight_flush
-  results[:one_pair_with_hands] = results[:one_pair_with_hands] + 1 if one_pair_with_hands
-  results[:three_of_a_kind_with_hands] = results[:three_of_a_kind_with_hands] + 1 if three_of_a_kind_with_hands
+
+  results[:one_pair_with_hands] = results[:one_pair_with_hands] + 1 if one_pair_with_hands?(table, hands)
+  results[:two_pair_with_hands] = results[:two_pair_with_hands] + 1 if two_pair_with_hands?(table, hands)
+  results[:three_of_a_kind_with_hands] = results[:three_of_a_kind_with_hands] + 1 if three_of_a_kind_with_hands?(table, hands)
+  results[:straight_with_hands] = results[:straight_with_hands] + 1 if straight_with_hands?(table, hands)
+  results[:flush_with_hands] = results[:flush_with_hands] + 1 if flush_with_hands?(table, hands)
 end
 
 puts '-' * 20
 puts "one_pair           #{to_percent(results[:one_pair], try_times)} %  (with_hands #{to_percent(results[:one_pair_with_hands], try_times)} %)"
-puts "two_pair           #{to_percent(results[:two_pair], try_times)} %"
+puts "two_pair           #{to_percent(results[:two_pair], try_times)} %  (with_hands #{to_percent(results[:two_pair_with_hands], try_times)} %)"
 puts "three_of_a_kind    #{to_percent(results[:three_of_a_kind], try_times)} %  (with_hands #{to_percent(results[:three_of_a_kind_with_hands], try_times)} %)"
-puts "straight           #{to_percent(results[:straight], try_times)} %"
-puts "flush              #{to_percent(results[:flush], try_times)} %"
+puts "straight           #{to_percent(results[:straight], try_times)} %  (with_hands #{to_percent(results[:straight_with_hands], try_times)} %)"
+puts "flush              #{to_percent(results[:flush], try_times)} %  (with_hands #{to_percent(results[:flush_with_hands], try_times)} %)"
 puts "full_house         #{to_percent(results[:full_house], try_times)} %"
 puts "four_of_a_kind     #{to_percent(results[:four_of_a_kind], try_times)} %"
 puts "straight_flush     #{to_percent(results[:straight_flush], try_times)} %"
