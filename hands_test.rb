@@ -235,6 +235,19 @@ class HandsTest < Test::Unit::TestCase
     ]
     assert_equal(pair_with_hands?(cards, hands), false)
 
+    cards = [
+      Card.new(5,  's'),
+      Card.new(5,  'h'),
+      Card.new(12, 's'),
+      Card.new(13, 'c'),
+      Card.new(8,  'd')
+    ]
+    hands = [
+      Card.new(3,  's'),
+      Card.new(11, 'h'),
+    ]
+    assert_equal(pair_with_hands?(cards, hands), false)
+
     assert_raises(OverFiveCardError) { pair_with_hands?(six_cards, hands) }
   end
 end
