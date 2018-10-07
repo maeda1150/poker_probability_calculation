@@ -34,6 +34,7 @@ end
 def straight?(cards)
   raise OverFiveCardError if cards.size >= 6
   sorted = cards.sort {|a, b| a.number <=> b.number }
+  return true if sorted.map(&:number) == [1, 10, 11, 12, 13]
   base = sorted[0].number
   sorted.each_with_index do |card, index|
     return false if card.number != (base + index)

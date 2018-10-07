@@ -60,6 +60,16 @@ class HandsTest < Test::Unit::TestCase
     ]
   end
 
+  def royal_straight
+    [
+      Card.new(13, 'h'),
+      Card.new(10, 'h'),
+      Card.new(1,  's'),
+      Card.new(11, 'c'),
+      Card.new(12, 'd')
+    ]
+  end
+
   def flush
     [
       Card.new(4,  'd'),
@@ -156,6 +166,7 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(straight?(two_pair),        false)
     assert_equal(straight?(three_of_a_kind), false)
     assert_equal(straight?(straight),        true)
+    assert_equal(straight?(royal_straight),  true)
     assert_equal(straight?(flush),           false)
     assert_equal(straight?(full_house),      false)
     assert_equal(straight?(four_of_a_kind),  false)
