@@ -70,3 +70,11 @@ def straight_flush?(cards)
   raise OverFiveCardError if cards.size >= 6
   straight?(cards) && flush?(cards)
 end
+
+def pair_with_hands?(cards, hands)
+  raise OverFiveCardError if cards.size >= 6
+  hands.each do |hand|
+    return true if cards.map(&:number).include?(hand.number)
+  end
+  false
+end

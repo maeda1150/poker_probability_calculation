@@ -214,4 +214,27 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(straight_flush?(straight_flush),  true)
     assert_raises(OverFiveCardError) { straight_flush?(six_cards) }
   end
+
+  def test_pair_with_hands?
+    cards = [
+      Card.new(1,  's'),
+      Card.new(5,  'h'),
+      Card.new(12, 's'),
+      Card.new(13, 'c'),
+      Card.new(8,  'd')
+    ]
+    hands = [
+      Card.new(3,  's'),
+      Card.new(8,  'h'),
+    ]
+    assert_equal(pair_with_hands?(cards, hands), true)
+
+    hands = [
+      Card.new(3,  's'),
+      Card.new(2,  'h'),
+    ]
+    assert_equal(pair_with_hands?(cards, hands), false)
+
+    assert_raises(OverFiveCardError) { pair_with_hands?(six_cards, hands) }
+  end
 end
