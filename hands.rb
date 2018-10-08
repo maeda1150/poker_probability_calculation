@@ -86,14 +86,17 @@ def straight_flush?(cards)
   nakid_straight?(cards) && nakid_flush?(cards)
 end
 
+# TODO: need improve
 def one_pair_with_hands?(cards, hands)
   raise OverFiveCardError if cards.size >= 6
+  return true if !one_pair?(cards) && hands[0].number == hands[1].number
   hands.each do |hand|
     return true if cards.map(&:number).include?(hand.number)
   end
   false
 end
 
+# TODO: need improve
 def two_pair_with_hands?(cards, hands)
   raise OverFiveCardError if cards.size >= 6
   cards.combination(3) do |a, b, c|
@@ -103,6 +106,7 @@ def two_pair_with_hands?(cards, hands)
   false
 end
 
+# TODO: need exclude full house
 def three_of_a_kind_with_hands?(cards, hands)
   raise OverFiveCardError if cards.size >= 6
   cards.combination(3) do |a, b, c|
