@@ -3,10 +3,11 @@ class OverFiveCardError < StandardError; end
 # 2ペア、3カード、フルハウス、4カード含む
 def one_pair?(cards)
   raise OverFiveCardError if cards.size >= 6
+  count = 0
   cards.combination(2) do |a, b|
-    return true if a.number == b.number
+    count = count + 1 if a.number == b.number
   end
-  false
+  count == 1
 end
 
 # フルハウス、4カード含む

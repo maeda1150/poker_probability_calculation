@@ -124,12 +124,12 @@ class HandsTest < Test::Unit::TestCase
   def test_one_pair?
     assert_equal(one_pair?(no_pair),         false)
     assert_equal(one_pair?(one_pair),        true)
-    assert_equal(one_pair?(two_pair),        true)
-    assert_equal(one_pair?(three_of_a_kind), true)
+    assert_equal(one_pair?(two_pair),        false)
+    assert_equal(one_pair?(three_of_a_kind), false)
     assert_equal(one_pair?(straight),        false)
     assert_equal(one_pair?(flush),           false)
-    assert_equal(one_pair?(full_house),      true)
-    assert_equal(one_pair?(four_of_a_kind),  true)
+    assert_equal(one_pair?(full_house),      false)
+    assert_equal(one_pair?(four_of_a_kind),  false)
     assert_equal(one_pair?(straight_flush),  false)
     assert_raises(OverFiveCardError) { one_pair?(six_cards) }
   end
