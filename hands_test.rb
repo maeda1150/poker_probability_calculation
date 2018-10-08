@@ -170,7 +170,7 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(straight?(flush),           false)
     assert_equal(straight?(full_house),      false)
     assert_equal(straight?(four_of_a_kind),  false)
-    assert_equal(straight?(straight_flush),  true)
+    assert_equal(straight?(straight_flush),  false)
     assert_raises(OverFiveCardError) { straight?(six_cards) }
   end
 
@@ -183,7 +183,7 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(flush?(flush),           true)
     assert_equal(flush?(full_house),      false)
     assert_equal(flush?(four_of_a_kind),  false)
-    assert_equal(flush?(straight_flush),  true)
+    assert_equal(flush?(straight_flush),  false)
     assert_raises(OverFiveCardError) { flush?(six_cards) }
   end
 

@@ -34,8 +34,13 @@ def three_of_a_kind?(cards)
   false
 end
 
-# ストレートフラッシュ含む
 def straight?(cards)
+  raise OverFiveCardError if cards.size >= 6
+  return false if nakid_flush?(cards)
+  nakid_straight?(cards)
+end
+
+def nakid_straight?(cards)
   raise OverFiveCardError if cards.size >= 6
   sorted = cards.sort {|a, b| a.number <=> b.number }
   return true if sorted.map(&:number) == [1, 10, 11, 12, 13]
@@ -46,8 +51,13 @@ def straight?(cards)
   true
 end
 
-# ストレートフラッシュ含む
 def flush?(cards)
+  raise OverFiveCardError if cards.size >= 6
+  return false if nakid_straight?(cards)
+  nakid_flush?(cards)
+end
+
+def nakid_flush?(cards)
   raise OverFiveCardError if cards.size >= 6
   cards[0].suit == cards[1].suit && cards[0].suit == cards[2].suit && cards[0].suit == cards[3].suit && cards[0].suit == cards[4].suit
 end
@@ -73,7 +83,7 @@ end
 
 def straight_flush?(cards)
   raise OverFiveCardError if cards.size >= 6
-  straight?(cards) && flush?(cards)
+  nakid_straight?(cards) && nakid_flush?(cards)
 end
 
 def one_pair_with_hands?(cards, hands)
