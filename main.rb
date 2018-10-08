@@ -28,7 +28,7 @@ else
   []
 end
 
-puts "Your hands are #{build_message_hands(hands).join(', ')}."
+puts "Your hands are #{build_message_hands(hands).join(' ')}."
 if hands[0].same?(hands[1])
   puts 'Your hands are same. Please set different cards.'
   exit 1
@@ -41,7 +41,7 @@ unless flop.empty?
       exit 1
     end
   end
-  puts "Flop is #{build_message_hands(flop).join(', ')}."
+  puts "Flop is #{build_message_hands(flop).join(' ')}."
 end
 
 try_times = ARGV[1].to_i || 10_000
