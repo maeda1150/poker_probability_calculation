@@ -13,13 +13,15 @@ end
 # フルハウス、4カード含む
 def two_pair?(cards)
   raise OverFiveCardError if cards.size >= 6
+  count = 0
+  set   = []
   cards.combination(2) do |a, b|
     if a.number == b.number
-      rest = cards.reject {|card| card.same?(a) || card.same?(b) }
-      return true if one_pair?(rest)
+      count = count + 1
+      set << a.number
     end
   end
-  false
+  count == 2 && set[0] != set[1]
 end
 
 # フルハウス含む
