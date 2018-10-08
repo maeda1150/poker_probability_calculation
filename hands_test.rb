@@ -154,8 +154,8 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(three_of_a_kind?(three_of_a_kind), true)
     assert_equal(three_of_a_kind?(straight),        false)
     assert_equal(three_of_a_kind?(flush),           false)
-    assert_equal(three_of_a_kind?(full_house),      true)
-    assert_equal(three_of_a_kind?(four_of_a_kind),  true)
+    assert_equal(three_of_a_kind?(full_house),      false)
+    assert_equal(three_of_a_kind?(four_of_a_kind),  false)
     assert_equal(three_of_a_kind?(straight_flush),  false)
     assert_raises(OverFiveCardError) { three_of_a_kind?(six_cards) }
   end

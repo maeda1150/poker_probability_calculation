@@ -22,11 +22,14 @@ def two_pair?(cards)
   count == 2 && set[0] != set[1]
 end
 
-# フルハウス含む
 def three_of_a_kind?(cards)
   raise OverFiveCardError if cards.size >= 6
+  return false if four_of_a_kind?(cards)
   cards.combination(3) do |a, b, c|
-    return true if a.number == b.number && b.number == c.number
+    if a.number == b.number && b.number == c.number
+      rest = cards.reject {|card| card.same?(a) || card.same?(b) || card.same?(c) }
+      return true if rest[0].number != rest[1].number
+    end
   end
   false
 end
