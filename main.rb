@@ -8,20 +8,40 @@ require './utils.rb'
 
 input_cards = split_number_and_suit(ARGV[0])
 
-if input_cards.size != 4
-  puts 'Please set collect cards like this. "ruby main.rb 3s5d"'
+unless input_cards.size == 4 || input_cards.size == 10
+  puts 'Please set collect cards like this. "ruby main.rb 3s5d" or "ruby main.rb 3s5d8h12d6s".'
   exit 1
 end
 
-hands = [Card.new(input_cards[0], input_cards[1]), Card.new(input_cards[2], input_cards[3])]
-messages = []
-hands.each do |hand|
-  messages << "'number: #{hand.number}, suit: #{hand.suit}'"
+hands = [
+  Card.new(input_cards[0], input_cards[1]),
+  Card.new(input_cards[2], input_cards[3])
+]
+
+flop = if input_cards.size == 10
+  [
+    Card.new(input_cards[4], input_cards[5]),
+    Card.new(input_cards[6], input_cards[7]),
+    Card.new(input_cards[8], input_cards[9])
+  ]
+else
+  []
 end
-puts "Your hands are #{messages.join(', ')}."
+
+puts "Your hands are #{build_message_hands(hands).join(', ')}."
 if hands[0].same?(hands[1])
   puts 'Your hands are same. Please set different cards.'
   exit 1
+end
+
+unless flop.empty?
+  [*hands, *flop].combination(2) do |a, b|
+    if a.same?(b)
+      puts 'Your hands or flop are same. Please set different cards.'
+      exit 1
+    end
+  end
+  puts "Flop is #{build_message_hands(flop).join(', ')}."
 end
 
 try_times = ARGV[1].to_i || 10_000
@@ -47,9 +67,13 @@ start_time = Time.now
 
 try_times.times do |t|
   deck = create_deck
-  remove_cards_from_deck(deck, hands)
+  remove_cards_from_deck(deck, [*hands, *flop])
   shuffle_deck(deck)
-  table = deck[0..4]
+  table = if flop.empty?
+    deck[0..4]
+  else
+    [*flop, *deck[0..1]]
+  end
   all = [*table, *hands]
 
   one_pair = false

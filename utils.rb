@@ -36,3 +36,11 @@ def split_number_and_suit(input)
   end
   result
 end
+
+def build_message_hands(hands)
+  messages = []
+  hands.each do |hand|
+    messages << "#{hand.number}#{hand.suit}"
+  end
+  messages
+end
