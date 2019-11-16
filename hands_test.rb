@@ -124,12 +124,12 @@ class HandsTest < Test::Unit::TestCase
   def test_one_pair?
     assert_equal(one_pair?(no_pair),         false)
     assert_equal(one_pair?(one_pair),        true)
-    assert_equal(one_pair?(two_pair),        true)
-    assert_equal(one_pair?(three_of_a_kind), true)
+    assert_equal(one_pair?(two_pair),        false)
+    assert_equal(one_pair?(three_of_a_kind), false)
     assert_equal(one_pair?(straight),        false)
     assert_equal(one_pair?(flush),           false)
-    assert_equal(one_pair?(full_house),      true)
-    assert_equal(one_pair?(four_of_a_kind),  true)
+    assert_equal(one_pair?(full_house),      false)
+    assert_equal(one_pair?(four_of_a_kind),  false)
     assert_equal(one_pair?(straight_flush),  false)
     assert_raises(OverFiveCardError) { one_pair?(six_cards) }
   end
@@ -141,8 +141,8 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(two_pair?(three_of_a_kind), false)
     assert_equal(two_pair?(straight),        false)
     assert_equal(two_pair?(flush),           false)
-    assert_equal(two_pair?(full_house),      true)
-    assert_equal(two_pair?(four_of_a_kind),  true)
+    assert_equal(two_pair?(full_house),      false)
+    assert_equal(two_pair?(four_of_a_kind),  false)
     assert_equal(two_pair?(straight_flush),  false)
     assert_raises(OverFiveCardError) { two_pair?(six_cards) }
   end
@@ -154,8 +154,8 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(three_of_a_kind?(three_of_a_kind), true)
     assert_equal(three_of_a_kind?(straight),        false)
     assert_equal(three_of_a_kind?(flush),           false)
-    assert_equal(three_of_a_kind?(full_house),      true)
-    assert_equal(three_of_a_kind?(four_of_a_kind),  true)
+    assert_equal(three_of_a_kind?(full_house),      false)
+    assert_equal(three_of_a_kind?(four_of_a_kind),  false)
     assert_equal(three_of_a_kind?(straight_flush),  false)
     assert_raises(OverFiveCardError) { three_of_a_kind?(six_cards) }
   end
@@ -170,7 +170,7 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(straight?(flush),           false)
     assert_equal(straight?(full_house),      false)
     assert_equal(straight?(four_of_a_kind),  false)
-    assert_equal(straight?(straight_flush),  true)
+    assert_equal(straight?(straight_flush),  false)
     assert_raises(OverFiveCardError) { straight?(six_cards) }
   end
 
@@ -183,7 +183,7 @@ class HandsTest < Test::Unit::TestCase
     assert_equal(flush?(flush),           true)
     assert_equal(flush?(full_house),      false)
     assert_equal(flush?(four_of_a_kind),  false)
-    assert_equal(flush?(straight_flush),  true)
+    assert_equal(flush?(straight_flush),  false)
     assert_raises(OverFiveCardError) { flush?(six_cards) }
   end
 
@@ -255,6 +255,19 @@ class HandsTest < Test::Unit::TestCase
     ]
     hands = [
       Card.new(3,  's'),
+      Card.new(11, 'h'),
+    ]
+    assert_equal(one_pair_with_hands?(cards, hands), false)
+
+    cards = [
+      Card.new(5,  's'),
+      Card.new(5,  'h'),
+      Card.new(12, 's'),
+      Card.new(13, 'c'),
+      Card.new(8,  'd')
+    ]
+    hands = [
+      Card.new(11, 's'),
       Card.new(11, 'h'),
     ]
     assert_equal(one_pair_with_hands?(cards, hands), false)

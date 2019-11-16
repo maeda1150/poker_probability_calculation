@@ -56,6 +56,7 @@ results = {
   full_house:      0,
   four_of_a_kind:  0,
   straight_flush:  0,
+  pair_with_hands:            0,
   one_pair_with_hands:        0,
   two_pair_with_hands:        0,
   three_of_a_kind_with_hands: 0,
@@ -106,6 +107,7 @@ try_times.times do |t|
   results[:four_of_a_kind] = results[:four_of_a_kind] + 1 if four_of_a_kind
   results[:straight_flush] = results[:straight_flush] + 1 if straight_flush
 
+  results[:pair_with_hands] = results[:pair_with_hands] + 1 if pair_with_hands?(table, hands)
   results[:one_pair_with_hands] = results[:one_pair_with_hands] + 1 if one_pair_with_hands?(table, hands)
   results[:two_pair_with_hands] = results[:two_pair_with_hands] + 1 if two_pair_with_hands?(table, hands)
   results[:three_of_a_kind_with_hands] = results[:three_of_a_kind_with_hands] + 1 if three_of_a_kind_with_hands?(table, hands)
@@ -114,6 +116,7 @@ try_times.times do |t|
 end
 
 puts '-' * 20
+puts "pair_with_hands    #{to_percent(results[:pair_with_hands], try_times)} %"
 puts "one_pair           #{to_percent(results[:one_pair], try_times)} %  (with_hands #{to_percent(results[:one_pair_with_hands], try_times)} %)"
 puts "two_pair           #{to_percent(results[:two_pair], try_times)} %  (with_hands #{to_percent(results[:two_pair_with_hands], try_times)} %)"
 puts "three_of_a_kind    #{to_percent(results[:three_of_a_kind], try_times)} %  (with_hands #{to_percent(results[:three_of_a_kind_with_hands], try_times)} %)"
